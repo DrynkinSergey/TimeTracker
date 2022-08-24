@@ -5,14 +5,8 @@ const App = () =>{
     const [minutes, setMinutes] = useState(0)
     const [hours, setHours] = useState(0)
     const [days, setDays] = useState(0)
+    const [interval, setInt] = useState<NodeJS.Timer>()
 
-    const [interval, setInt] = useState()
-    const startTimer = () => {
-        let int = setInterval(()=>setSeconds(  prev=> prev+1),1000);
-        // @ts-ignore
-        setInt(int);
-        setIsTracked(true)
-    }
     useEffect(()=>{
         if(seconds===60){
             setMinutes(prev => prev+1)
@@ -24,25 +18,41 @@ const App = () =>{
         }
         if(hours === 24){
             setDays(prev => prev+1)
-            setSeconds(0)
+            setHours(0)
         }
     },[seconds])
+    const startTimer = () => {
+        let int = setInterval(()=>setSeconds(  prev=> prev+1),1000);
+        setInt(int);
+        setIsTracked(true)
 
-
-    const stop = ()=> {
+    }
+    const pause = ()=> {
         clearInterval(interval);
         setIsTracked(false)
     }
+    const stop = ()=> {
+        clearInterval(interval);
+        setSeconds(0);
+        setHours(0);
+        setMinutes(0);
+        setIsTracked(false)
+
+
+    }
 
     return (
-    <div className="App  bg-gradient-to-r from-cyan-500 to-blue-500">
-        <div className="container mx-auto h-screen w-full">
+    <div className="App grid  place-items-center  h-screen bg-gradient-to-r from-pink-300 to-blue-500">
+        <div className='flex flex-col container'>
            <h1 className='mx-auto text-4xl text-center py-5 text-white font-bold'>Timer Tracker</h1>
-            <h2 className='text-5xl py-3 px-3'>{hours<10? `0${hours}`:hours}
+            <h2 className={`text-5xl border-8  ${isTracked?'bg-gradient-to-r from-pink-500 to-blue-500': 'bg-gradient-to-r from-blue-500 to-pink-500'} w-1/6 py-10 my-10 mx-auto px-7 rounded-full`}>{hours<10? `0${hours}`:hours}
                 :{minutes<10? `0${minutes}`:minutes}
                 :{seconds<10? `0${seconds}`:seconds}</h2>
-            <button disabled={isTracked} onClick={startTimer} className='bg-lime-400 py-2 px-2 mx-2 rounded-md hover:text-white'>Go track!</button>
-            <button onClick={stop} className='bg-lime-400 py-2 px-2 rounded-md hover:text-white'>Stop track!</button>
+           <div className='flex justify-center gap-5'>
+               <button disabled={isTracked} onClick={startTimer} className='bg-lime-400 py-2 px-2 rounded-md hover:text-white'>Go track!</button>
+               <button onClick={pause} className='bg-sky-700 py-2 px-2 rounded-md hover:text-white'>Pause</button>
+               <button onClick={stop} className='bg-red-400 py-2 px-2 rounded-md hover:text-white'>Stop track!</button>
+           </div>
         </div>
     </div>
   );
