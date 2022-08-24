@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/TimeTracker/static/css/main.e29bf0af.css",
+    "main.js": "/TimeTracker/static/js/main.9a58b852.js",
+    "index.html": "/TimeTracker/index.html",
+    "main.e29bf0af.css.map": "/TimeTracker/static/css/main.e29bf0af.css.map",
+    "main.9a58b852.js.map": "/TimeTracker/static/js/main.9a58b852.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e29bf0af.css",
+    "static/js/main.9a58b852.js"
+  ]
+}
